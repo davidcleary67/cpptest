@@ -1,6 +1,6 @@
-Compile the C++ source code file ctest.cpp to the executable file ctest
+Compile the C++ source code file ctest.cpp to the executable file ctest with the -g debug option
 
-# g++ -o ctest -c ctest.cpp
+# g++ -g -o ctest ctest.cpp
 
 Run the executable file ctest
 
@@ -9,3 +9,25 @@ Run the executable file ctest
 Set the permission on the executable file ctest so that the current user can read, write and execute it and everyone else can read it
 
 # chmod 744 ctest
+
+Debug the executable file ctest
+
+Start the gdb debugger
+# gdb ctest
+
+Gdb commands
+$ run --> run ctest
+$ run arg1 arg2 --> run ctest with arguments arg1 and arg2
+$ b main --> set a breakpoint at the function main
+$ b 20 --> set a breakpoint at line 20
+$ info b --> list all breakpoints
+$ next --> execute the next line, stepping into functions
+$ step --> execute the next line, stepping over functions
+$ until --> execute to the end of the current loop
+$ print exp --> print the value of exp
+$ where --> print the current location 
+$ continue --> continue running the program in
+
+W3 Schools C++ tutorial
+
+https://www.w3schools.com/cpp/default.asp
