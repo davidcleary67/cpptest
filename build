@@ -1,0 +1,11 @@
+#!/bin/bash
+
+echo Compile and Link C++ files
+
+set -v
+
+rm *.o ctest
+
+g++ -o one.o -c one.cpp
+g++ -o ctest.o -c ctest.cpp
+g++ -o ctest ctest.o one.o
