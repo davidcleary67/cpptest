@@ -1,0 +1,52 @@
+1 Create new repository, cpptest, in github.com
+
+2 Create new ssh private/public key in Cloud9 and add public key to github
+
+In the user's root directory
+
+# ssh-keygen
+# cat .ssh/id_rsa.pub2 
+
+Copy the public key, the file contents, to the clipboard
+
+Select <User menu> Settings | SSH and GPG keys | New SSH key
+
+Enter key Title, paste public key into Key and click on [Add SSH key]
+
+3 Initialise git on Cloud9
+
+# git --version
+# git config --global user.name "David Cleary"
+# git config --global user.email "davidcgcleary@gmail.com"
+
+4 Clone git repositoy to Cloud9 as a subdirectory, ctest1, of directory, environment
+
+# cd ~/environment
+# git clone git@github.com:davidcleary67/cpptest.git ctest1
+
+5 Create and modify files in the newly create directory, ctest1
+
+# cd ctest1
+
+6 Update git reposistory
+
+Show files to be added
+
+# git status
+
+Add all files to staging area
+
+# git add --all
+
+Commit files in staging area
+
+# git commit -m "Message"
+
+Push files to repository
+
+# git push
+
+7 Download files from repository
+
+# cd ctest1
+# git pull

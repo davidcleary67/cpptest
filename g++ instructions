@@ -1,0 +1,11 @@
+Compile the C++ source code file ctest.cpp to the executable file ctest
+
+# g++ -o ctest -c ctest.cpp
+
+Run the executable file ctest
+
+# ./ctest
+
+Set the permission on the executable file ctest so that the current user can read, write and execute it and everyone else can read it
+
+# chmod 744 ctest
