@@ -6,6 +6,6 @@ set -v
 
 rm *.o ctest
 
-g++ -o one.o -c one.cpp
-g++ -o ctest.o -c ctest.cpp
-g++ -o ctest ctest.o one.o
+g++ -g -o one.o -c one.cpp
+g++ -g -o ctest.o -c ctest.cpp
+g++ -g -o ctest ctest.o one.o
