@@ -1,11 +1,8 @@
 #!/bin/bash
 
-echo Compile and Link C++ files
+echo Compile and Link
+set -x
 
-set -v
-
-rm *.o ctest
-
-g++ -g -o one.o -c one.cpp
-g++ -g -o ctest.o -c ctest.cpp
-g++ -g -o ctest ctest.o one.o
+g++ -ggdb3 -o one.o -c one.cpp
+g++ -ggdb3 -o ctest.o -c ctest.cpp
+g++ -ggdb3 -o ctest ctest.o one.o

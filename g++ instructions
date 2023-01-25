@@ -12,6 +12,23 @@ Set the permission on the executable file ctest so that the current user can rea
 
 Debug the executable file ctest
 
+Option 1 - Cloud9 debugger
+
+a) Create a new Run Configuration
+
+b) Set the runner to C++
+
+c) Set the CWD to the appropriate directory
+
+d) Click on the debugger icon to turn on the debugger
+
+e) Specify as Command the full path from the starting directory, environment,
+   to the C++ source code file followed by the list of all command line arguments
+   
+   Need to understand how to debug multi-file programs
+
+Option 2 - gdb debugger
+
 Start the gdb debugger
 # gdb ctest
 
