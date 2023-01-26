@@ -1,0 +1,13 @@
+SUCCESS Thu Jan 26 02:30:26 2023 Backed up directory '/home/ec2-user/environment/ctest1/dir1 to /home/ec2-user/environment/ctest1/backup1.
+SUCCESS Thu Jan 26 02:30:48 2023 Backed up file '/home/ec2-user/environment/ctest1/ctest.h to /home/ec2-user/environment/ctest1/backup1.
+SUCCESS Thu Jan 26 02:38:14 2023 Backed up file '/home/ec2-user/environment/ctest1/ctest.h' to '/home/ec2-user/environment/ctest1/backup1'.
+SUCCESS Thu Jan 26 02:38:23 2023 Backed up file '/home/ec2-user/environment/ctest1/ctest.h' to '/home/ec2-user/environment/ctest1/backup1'.
+SUCCESS Thu Jan 26 02:38:27 2023 Backed up directory '/home/ec2-user/environment/ctest1/dir1' to '/home/ec2-user/environment/ctest1/backup1'.
+FAILURE Thu Jan 26 02:38:31 2023 Job 'job3' not defined.
+FAILURE Thu Jan 26 02:39:05 2023 Source '/home/ec2-user/environment/ctest1/invalid invalid.
+FAILURE Thu Jan 26 02:39:44 2023 Destination directory '/home/ec2-user/environment/ctest1/invalid invalid.
+FAILURE Thu Jan 26 02:40:22 2023 Destination directory '/home/ec2-user/environment/ctest1/invalid is invalid.
+FAILURE Thu Jan 26 02:41:02 2023 Destination directory '/home/ec2-user/environment/ctest1/invalid is invalid.
+FAILURE Thu Jan 26 02:41:05 2023 Destination directory '/home/ec2-user/environment/ctest1/invalid' is invalid.
+SUCCESS Thu Jan 26 02:44:57 2023 Backed up directory '/home/ec2-user/environment/ctest1/dir1' to '/home/ec2-user/environment/ctest1/backup1'.
+SUCCESS Thu Jan 26 02:48:00 2023 Backed up directory '/home/ec2-user/environment/ctest1/dir1' to '/home/ec2-user/environment/ctest1/backup1'.

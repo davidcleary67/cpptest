@@ -17,11 +17,10 @@ void loadJobs(void)
     string sJob0;
     SJob stJob1;
 
-    ifstream fJobs("backup.cfg");    
+    ifstream fJobs(BACKUPCONFIG);    
     
     while (getline(fJobs, sJob0))
     {
-        // cout << "Job: " << sJob0 << "\n";        
         stringstream stJob0(sJob0);
     
         getline(stJob0, stJob1.sJob, ' ');
@@ -44,7 +43,6 @@ void displayJobs(void)
     for (auto i = vJobs.begin(); i != vJobs.end(); i ++)
     {
         displayJob(*i);
-        // cout << i->sJob << i->sSrc << i->sDst << "\n";
     }
 }
 
@@ -55,8 +53,6 @@ bool getJob(string sJob, string &sSrc, string &sDst)
     auto i = vJobs.begin();
     while (i != vJobs.end())
     {
-        // cout << i->sJob << i->sSrc << i->sDst << "\n";
-        
         if (sJob == i->sJob)
         {
             sSrc = i->sSrc;
@@ -70,7 +66,7 @@ bool getJob(string sJob, string &sSrc, string &sDst)
     return bResult;
 }
 
-string dateTimeStamp(void)
+string dateTimeStamp(bool bVerbose = false)
 {
     time_t rawtime;
     struct tm * timeinfo;
@@ -79,28 +75,29 @@ string dateTimeStamp(void)
     time(&rawtime);
     timeinfo = localtime(&rawtime);
 
-    strftime(buffer, 80, "%Y%m%d-%H%M%S", timeinfo);
+    strftime(buffer, 80, (bVerbose ? "%c" : "%Y%m%d-%H%M%S"), timeinfo);
     return buffer;
 }
 
 void copyFile(string sSrc, string sDst)
 {
     string sSrcFilename = sSrc.substr(sSrc.find_last_of("/") + 1);
-    
     string sCommand = "cp " + sSrc + " " + sDst + "/" + sSrcFilename + dateTimeStamp();
-    //cout << sCommand << "\n";
-    
     system(sCommand.c_str());
 }
 
 void copyDirectory(string sSrc, string sDst)
 {
     string sSrcFilename = sSrc.substr(sSrc.find_last_of("/") + 1);
-    
     string sCommand = "cp -a " + sSrc + " " + sDst + "/" + sSrcFilename + dateTimeStamp();
-    //cout << sCommand << "\n";
-    
     system(sCommand.c_str());
+}
+
+void writeLogMessage(bool bStatus, string sMessage)
+{
+    ofstream fLog(BACKUPLOG, std::ios_base::app);    
+    fLog << (bStatus ? "SUCCESS " : "FAILURE ") << dateTimeStamp(true) << " " << sMessage << "\n";
+    fLog.close();
 }
 
 int main(int argc, char *argv[])
@@ -123,25 +120,24 @@ int main(int argc, char *argv[])
     {
         // Load all jobs from file
         loadJobs();
-        displayJobs();
+        //displayJobs();
         
         // Command line argument is valid job
         sJob = argv[1];
         bResult = getJob(sJob, sSrc, sDst);
         if (!bResult) 
         {
-            cout << "Error: Job " << sJob << " not in jobs.\n";
+            writeLogMessage(false, "Job '" + sJob + "' not defined.");
         }
     }
         
     if (bResult)
     {
         // Src is valid file or directory
-        //cout << "Job " << sJob << ".\n";
         bResult = (stat(sSrc.c_str(), &sb) == 0);
         if (!bResult)
         {
-            cout << "Error: The src " << sSrc << " is invalid.\n";
+            writeLogMessage(false, "Source '" + sSrc + "' is invalid.");
         }
     }
     
@@ -149,30 +145,28 @@ int main(int argc, char *argv[])
     {
         // Determine if src is file or directory
         bSrcIsDir = (sb.st_mode & S_IFDIR);
-        cout << "Src is valid and is a " << (bSrcIsDir ? "directory" : "file") << ".\n";
         
         // Dst is valid directory
-        //cout << "Job " << sJob << ".\n";
         bResult = (stat(sDst.c_str(), &sb) == 0) && (sb.st_mode & S_IFDIR);
         if (!bResult)
         {
-            cout << "Error: The dst directory" << sDst << " is invalid.\n";
+            writeLogMessage(false, "Destination directory '" + sDst + "' is invalid.");
         }
     }
     
     if (bResult)
     {
-        cout << "Dst is valid and is a directory.\n";
-        
         // Backup directory
         if (bSrcIsDir)
         {
             copyDirectory(sSrc, sDst);    
+            writeLogMessage(true, "Backed up directory '" + sSrc + "' to '" + sDst + "'.");
         }
         // Backup file
         else
         {
             copyFile(sSrc, sDst);
+            writeLogMessage(true, "Backed up file '" + sSrc + "' to '" + sDst + "'.");
         }
     }
     
