@@ -11,3 +11,16 @@ FAILURE Thu Jan 26 02:41:02 2023 Destination directory '/home/ec2-user/environme
 FAILURE Thu Jan 26 02:41:05 2023 Destination directory '/home/ec2-user/environment/ctest1/invalid' is invalid.
 SUCCESS Thu Jan 26 02:44:57 2023 Backed up directory '/home/ec2-user/environment/ctest1/dir1' to '/home/ec2-user/environment/ctest1/backup1'.
 SUCCESS Thu Jan 26 02:48:00 2023 Backed up directory '/home/ec2-user/environment/ctest1/dir1' to '/home/ec2-user/environment/ctest1/backup1'.
+SUCCESS Thu Jan 26 08:18:29 2023 Backed up directory '/home/ec2-user/environment/ctest1/dir1' to '/home/ec2-user/environment/ctest1/backup1'.
+SUCCESS Thu Jan 26 08:18:50 2023 Backed up directory '/home/ec2-user/environment/ctest1/dir1' to '/home/ec2-user/environment/ctest1/backup1'.
+FAILURE Thu Jan 26 08:19:03 2023 Job 'job6' not defined.
+FAILURE Thu Jan 26 08:19:26 2023 Job 'job6' is not defined.
+FAILURE Thu Jan 26 09:21:26 2023 Job 'job34' is not defined.
+FAILURE Thu Jan 26 09:22:23 2023 Job 'job34' is not defined.
+FAILURE Thu Jan 26 09:22:51 2023 Job 'job34' is not defined.
+FAILURE Thu Jan 26 09:25:52 2023 Source '/home/ec2-user/environment/ctest1/invalid' is invalid.
+FAILURE Thu Jan 26 09:26:19 2023 Destination directory '/home/ec2-user/environment/ctest1/invalid' is invalid.
+FAILURE Thu Jan 26 10:02:07 2023 Destination directory '/home/ec2-user/environment/ctest1/invalid' is invalid.
+FAILURE Thu Jan 26 10:02:22 2023 Job 'job55' is not defined.
+FAILURE Thu Jan 26 10:04:18 2023 Job 'job55' is not defined.
+FAILURE Thu Jan 26 10:05:19 2023 Job 'job55' is not defined.

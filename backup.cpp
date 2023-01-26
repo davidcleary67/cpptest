@@ -10,16 +10,21 @@
 using namespace std;
 
 vector<SJob> vJobs;
+string sUser;
 
-void loadJobs(void)
+void loadUserJobs(void)
 {
     bool bResult = true;
     string sJob0;
     SJob stJob1;
 
-    ifstream fJobs(BACKUPCONFIG);    
-    
-    while (getline(fJobs, sJob0))
+    ifstream fConfig(BACKUPCONFIG);    
+  
+    // Read user 
+    getline(fConfig, sUser);
+   
+    // Read jobs 
+    while (getline(fConfig, sJob0))
     {
         stringstream stJob0(sJob0);
     
@@ -30,7 +35,7 @@ void loadJobs(void)
         vJobs.push_back(stJob1);
     }
     
-    fJobs.close();
+    fConfig.close();
 }
 
 void displayJob(SJob sJob)
@@ -100,6 +105,14 @@ void writeLogMessage(bool bStatus, string sMessage)
     fLog.close();
 }
 
+void sendEmailMessage(string sMessage)
+{
+    string sSubject = "Backup Failure";
+    string sCommand = "echo \"" + dateTimeStamp(true) + " " + sMessage + "\" | mailx -s \"Backup Failure\" " + sUser;
+    //cout << sCommand;
+    system(sCommand.c_str());
+}
+
 int main(int argc, char *argv[])
 {
     bool bResult = true;
@@ -119,7 +132,7 @@ int main(int argc, char *argv[])
     if (bResult)
     {
         // Load all jobs from file
-        loadJobs();
+        loadUserJobs();
         //displayJobs();
         
         // Command line argument is valid job
@@ -127,7 +140,9 @@ int main(int argc, char *argv[])
         bResult = getJob(sJob, sSrc, sDst);
         if (!bResult) 
         {
-            writeLogMessage(false, "Job '" + sJob + "' not defined.");
+            string sMessage = "Job '" + sJob + "' is not defined.";
+            writeLogMessage(false, sMessage);
+            sendEmailMessage(sMessage);
         }
     }
         
@@ -137,7 +152,9 @@ int main(int argc, char *argv[])
         bResult = (stat(sSrc.c_str(), &sb) == 0);
         if (!bResult)
         {
-            writeLogMessage(false, "Source '" + sSrc + "' is invalid.");
+            string sMessage = "Source '" + sSrc + "' is invalid.";
+            writeLogMessage(false, sMessage);
+            sendEmailMessage(sMessage);
         }
     }
     
@@ -150,7 +167,9 @@ int main(int argc, char *argv[])
         bResult = (stat(sDst.c_str(), &sb) == 0) && (sb.st_mode & S_IFDIR);
         if (!bResult)
         {
-            writeLogMessage(false, "Destination directory '" + sDst + "' is invalid.");
+            string sMessage = "Destination directory '" + sDst + "' is invalid.";
+            writeLogMessage(false, sMessage);
+            sendEmailMessage(sMessage);
         }
     }
     
