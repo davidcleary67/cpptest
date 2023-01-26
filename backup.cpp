@@ -109,6 +109,7 @@ void sendEmailMessage(string sMessage)
 {
     string sSubject = "Backup Failure";
     string sCommand = "echo \"" + dateTimeStamp(true) + " " + sMessage + "\" | mailx -s \"Backup Failure\" -r \"davidcgcleary@gmail.com\" -S smtp=\"smtp.gmail.com\" " + sUser;
+    //# echo "The actual message goes here" | mailx -v -r "user@domain.com" -s "The actual subject line goes here" -S smtp="smtp.domain.com:587" -S smtp-use-starttls -S smtp-auth=login -S smtp-auth-user="user@domain.com" -S smtp-auth-password="password123" -S ssl-verify=ignore the_recipient_email@domain.com
     //cout << sCommand;
     system(sCommand.c_str());
 }
