@@ -3,6 +3,8 @@
 #include <sstream>
 #include <vector>
 #include <sys/stat.h>
+#include <cstdlib>
+#include <time.h>
 #include "backup.h"
 
 using namespace std;
@@ -68,7 +70,39 @@ bool getJob(string sJob, string &sSrc, string &sDst)
     return bResult;
 }
 
-// Close the file
+string dateTimeStamp(void)
+{
+    time_t rawtime;
+    struct tm * timeinfo;
+    char buffer[80];
+
+    time(&rawtime);
+    timeinfo = localtime(&rawtime);
+
+    strftime(buffer, 80, "%Y%m%d-%H%M%S", timeinfo);
+    return buffer;
+}
+
+void copyFile(string sSrc, string sDst)
+{
+    string sSrcFilename = sSrc.substr(sSrc.find_last_of("/") + 1);
+    
+    string sCommand = "cp " + sSrc + " " + sDst + "/" + sSrcFilename + dateTimeStamp();
+    //cout << sCommand << "\n";
+    
+    system(sCommand.c_str());
+}
+
+void copyDirectory(string sSrc, string sDst)
+{
+    string sSrcFilename = sSrc.substr(sSrc.find_last_of("/") + 1);
+    
+    string sCommand = "cp -a " + sSrc + " " + sDst + "/" + sSrcFilename + dateTimeStamp();
+    //cout << sCommand << "\n";
+    
+    system(sCommand.c_str());
+}
+
 int main(int argc, char *argv[])
 {
     bool bResult = true;
@@ -76,37 +110,71 @@ int main(int argc, char *argv[])
     string sSrc= "";
     string sDst = "";
     bool bSrcIsDir = true;
-    
+    struct stat sb;
+
+    // Command line is program and one argument    
     if (argc != 2)
     {
         cout << "Usage: backup <job>\n";
+        bResult = false;
     }
-    else
+  
+    if (bResult)
     {
+        // Load all jobs from file
         loadJobs();
         displayJobs();
         
+        // Command line argument is valid job
         sJob = argv[1];
         bResult = getJob(sJob, sSrc, sDst);
-        
-        if (!bResult)
+        if (!bResult) 
         {
             cout << "Error: Job " << sJob << " not in jobs.\n";
         }
-        else
+    }
+        
+    if (bResult)
+    {
+        // Src is valid file or directory
+        //cout << "Job " << sJob << ".\n";
+        bResult = (stat(sSrc.c_str(), &sb) == 0);
+        if (!bResult)
         {
-            //cout << "Job " << sJob << ".\n";
-            struct stat sb;
-            if (stat(sSrc.c_str(), &sb) != 0)
-            {
-                cout << "Error: The src " << sSrc << " is invalid.\n";
-            }
-            else
-            {
-                bSrcIsDir = (sb.st_mode & S_IFDIR);
-                cout << "Src is valid and is a " << (bSrcIsDir ? "directory" : "file") << "\n";
-            }
+            cout << "Error: The src " << sSrc << " is invalid.\n";
         }
     }
+    
+    if (bResult)
+    {
+        // Determine if src is file or directory
+        bSrcIsDir = (sb.st_mode & S_IFDIR);
+        cout << "Src is valid and is a " << (bSrcIsDir ? "directory" : "file") << ".\n";
+        
+        // Dst is valid directory
+        //cout << "Job " << sJob << ".\n";
+        bResult = (stat(sDst.c_str(), &sb) == 0) && (sb.st_mode & S_IFDIR);
+        if (!bResult)
+        {
+            cout << "Error: The dst directory" << sDst << " is invalid.\n";
+        }
+    }
+    
+    if (bResult)
+    {
+        cout << "Dst is valid and is a directory.\n";
+        
+        // Backup directory
+        if (bSrcIsDir)
+        {
+            copyDirectory(sSrc, sDst);    
+        }
+        // Backup file
+        else
+        {
+            copyFile(sSrc, sDst);
+        }
+    }
+    
     return 0;
 }
