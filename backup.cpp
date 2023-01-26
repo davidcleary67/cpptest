@@ -108,7 +108,7 @@ void writeLogMessage(bool bStatus, string sMessage)
 void sendEmailMessage(string sMessage)
 {
     string sSubject = "Backup Failure";
-    string sCommand = "echo \"" + dateTimeStamp(true) + " " + sMessage + "\" | mailx -s \"Backup Failure\" " + sUser;
+    string sCommand = "echo \"" + dateTimeStamp(true) + " " + sMessage + "\" | mailx -s \"Backup Failure\" -r \"davidcgcleary@gmail.com\" -S smtp=\"smtp.gmail.com\" " + sUser;
     //cout << sCommand;
     system(sCommand.c_str());
 }
