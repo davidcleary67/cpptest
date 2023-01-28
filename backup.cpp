@@ -35,30 +35,48 @@ string sSMTPUsername; // Email address of user to access SMTP server
 string sSMTPPassword; // Password of user to access SMTP server
 
 // Load user email address and all defined jobs from configuration file, backup.cfg
-void loadUserJobs(void)
+bool loadUserJobs(void)
 {
     bool bResult = true;
-    string sJob0;
-    SJob stJob1;
-
-    ifstream fConfig(BACKUPCONFIG);    
-  
-    // Read user email address
-    getline(fConfig, sUser);
-   
-    // Read jobs 
-    while (getline(fConfig, sJob0))
-    {
-        stringstream stJob0(sJob0);
     
-        getline(stJob0, stJob1.sJob, ' ');
-        getline(stJob0, stJob1.sSrc, ' ');
-        getline(stJob0, stJob1.sDst, ' ');
+    try
+    {
+        string sJob0;
+        SJob stJob1;
+    
+        ifstream fConfig;
+       
+        fConfig.exceptions(ios::failbit | ios::badbit); 
         
-        vJobs.push_back(stJob1);
+        fConfig.open(BACKUPCONFIG);    
+      
+        fConfig.exceptions(ios::goodbit); 
+        
+        // Read user email address
+        getline(fConfig, sUser);
+       
+        // Read jobs 
+        while (getline(fConfig, sJob0))
+        {
+            stringstream stJob0(sJob0);
+        
+            getline(stJob0, stJob1.sJob, ' ');
+            getline(stJob0, stJob1.sSrc, ' ');
+            getline(stJob0, stJob1.sDst, ' ');
+            
+            vJobs.push_back(stJob1);
+        }
+        
+        fConfig.close();
+    }
+    catch (exception &e)
+    {
+        string sMessage = "Error reading configuration file '" + BACKUPCONFIG + "'. Exception: " + e.what();
+        writeLogMessage(false, sMessage);
+        bResult = false;
     }
     
-    fConfig.close();
+    return bResult;
 }
 
 // Load SMTP access settings from .backup file
@@ -68,8 +86,12 @@ bool loadSMTPSettings(void)
     
     try
     {
-        ifstream fSettings(SMTPSETTINGS);    
-      
+        ifstream fSettings;
+        
+        fSettings.exceptions(ios::failbit | ios::badbit); 
+        
+        fSettings.open(SMTPSETTINGS.c_str());    
+        
         // Read SMTP user email address and password
         getline(fSettings, sSMTPUsername);
         getline(fSettings, sSMTPPassword);
@@ -80,7 +102,7 @@ bool loadSMTPSettings(void)
     }
     catch (exception &e)
     {
-        string sMessage = "Error reading SMTP access settings file.";
+        string sMessage = "Error reading SMTP access settings file '" + SMTPSETTINGS + "'. Exception: " + e.what();
         writeLogMessage(false, sMessage);
         bResult = false;
     }
@@ -218,9 +240,12 @@ int main(int argc, char *argv[])
     if (bResult)
     {
         // Load all jobs from file
-        loadUserJobs();
+        bResult = loadUserJobs();
         //displayJobs();
-        
+    }
+    
+    if (bResult)
+    {    
         // Command line argument is valid job
         sJob = argv[1];
         bResult = getJob(sJob, sSrc, sDst);

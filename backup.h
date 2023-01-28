@@ -11,7 +11,7 @@ const string BACKUPCONFIG = "backup.cfg";
 const string BACKUPLOG = "backup.log";
 const string SMTPSETTINGS = ".backup";
 
-void loadUserJobs(void);
+bool loadUserJobs(void);
 bool loadSMTPSettings(void);
 void displayJob(SJob sJob);
 void displayJobs(void);

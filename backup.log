@@ -73,3 +73,17 @@ SUCCESS Fri Jan 27 23:51:03 2023 Backed up file '/home/ec2-user/environment/ctes
 FAILURE Fri Jan 27 23:51:05 2023 Source '/home/ec2-user/environment/ctest1/invalid' is invalid.
 FAILURE Fri Jan 27 23:51:10 2023 Destination directory '/home/ec2-user/environment/ctest1/invalid' is invalid.
 FAILURE Fri Jan 27 23:51:17 2023 Job 'job5' is not defined.
+FAILURE Sat Jan 28 22:55:13 2023 Error reading SMTP access settings file.
+FAILURE Sat Jan 28 23:02:35 2023 Error reading SMTP access settings file '.backupx'. Exception 'basic_ios::clear: iostream error
+.
+FAILURE Sat Jan 28 23:04:11 2023 Error reading SMTP access settings file '.backupx'. Exception: basic_ios::clear: iostream error
+FAILURE Sat Jan 28 23:13:20 2023 Error reading configuration file 'backup.cfg'. Exception: basic_ios::clear: iostream error
+FAILURE Sat Jan 28 23:14:00 2023 Error reading configuration file 'backup.cfg'. Exception: basic_ios::clear: iostream error
+FAILURE Sat Jan 28 23:14:26 2023 Error reading configuration file 'backup.cfg'. Exception: basic_ios::clear: iostream error
+SUCCESS Sat Jan 28 23:18:43 2023 Backed up directory '/home/ec2-user/environment/ctest5/dir1' to '/home/ec2-user/environment/ctest5/backup1'.
+SUCCESS Sat Jan 28 23:20:18 2023 Backed up directory '/home/ec2-user/environment/ctest5/dir1' to '/home/ec2-user/environment/ctest5/backup1'.
+SUCCESS Sat Jan 28 23:20:32 2023 Backed up directory '/home/ec2-user/environment/ctest5/dir1' to '/home/ec2-user/environment/ctest5/backup1'.
+SUCCESS Sat Jan 28 23:20:35 2023 Backed up file '/home/ec2-user/environment/ctest5/ctest.h' to '/home/ec2-user/environment/ctest5/backup1'.
+FAILURE Sat Jan 28 23:20:38 2023 Source '/home/ec2-user/environment/ctest5/invalid' is invalid.
+FAILURE Sat Jan 28 23:20:44 2023 Destination directory '/home/ec2-user/environment/ctest5/invalid' is invalid.
+FAILURE Sat Jan 28 23:20:49 2023 Job 'job5' is not defined.
