@@ -1,0 +1,28 @@
+# Using mailx to send email from within a C++ program via a system() call
+
+# 1. Install mailx
+
+# $ sudo yum install mailx
+
+# 2. Setup an app password for you Google gmail account
+
+# www.google.com | Account | Security | 2-Step verification -> on
+# www.google.com | Account | Security | App passwords | Select app -> Mail & Select device -> Windows computer & record app password
+
+# 2. Send email from within C++ program by accessing mailx via a system() call
+
+# // Set up the mailx command
+# // -v option turns on verbose mode; remove for non-verbose mode
+# string sCommand = "echo \"message\" | mailx -v -r \"davidcgcleary@gmail.com\" -s \"subject\" "
+#                   "-S smtp=\"smtp.gmail.com:587\" -S smtp-use-starttls -S smtp-auth=login "
+#                   "-S smtp-auth-user=\"davidcgcleary@gmail.com\" -S smtp-auth-password=\"password\" "
+#                   "-S ssl-verify=ignore -S nss-config-dir=/etc/pki/nssdb " + sUser;
+
+# // Execute the mailx command via system() call
+# system(sCommand_str());
+
+# This command generates the error message "Error in certificate: Peer's certificate issuer is not recognized.".
+# However, the email is still sent.
+
+#echo "<html><body><h1>VIC-20</h1><p>The Commodore VIC-20 was an eight-bit home computer sold by CBM in the early 1980s.</p></body></html>" | mailx -v -r "davidcgcleary@gmail.com" -a "Content-Type: text/html" -s "Test2" -S smtp="smtp.gmail.com:587" -S smtp-use-starttls -S smtp-auth=login -S smtp-auth-user="davidcgcleary@gmail.com" -S smtp-auth-password="ovmqhhimabochdnl" -S ssl-verify=ignore -S nss-config-dir=/etc/pki/nssdb davidcgcleary@gmail0.com
+echo -e "<h1><img src=\"https://as1.ftcdn.net/v2/jpg/01/29/69/22/1000_F_129692264_AtP71QrdnMhTufIXdhEhYEfVRXKzRv1R.jpg\" height=\"40px\" width=\"40px\">Message body</h1>" | mailx -v -r "davidcgcleary@gmail.com" -s "$(echo -e "Subject\nContent-Type: text/html\n\n")" -S smtp="smtp.gmail.com:587" -S smtp-use-starttls -S smtp-auth=login -S smtp-auth-user="davidcgcleary@gmail.com" -S smtp-auth-password="ovmqhhimabochdnl" -S ssl-verify=ignore -S nss-config-dir=/etc/pki/nssdb davidcgcleary@gmail.com

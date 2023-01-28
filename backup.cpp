@@ -1,3 +1,20 @@
+/*
+Program: backup
+Usage: backup <jobName>
+Author: David Cleary
+Date: Jan 2023
+Copyright: SuniTAFE 2023
+
+Description: The backup program can be used to backup a file or a directory to
+a specified location.  The program's argument specifies the name of the 
+backup job to execute.  Job names, source source files or directories and 
+destination directories are specified in the configuration file, backup.cfg, 
+starting at the second line.  The first line specifies the email address of 
+the user to whom error reports are sent if a backup fails.  Each backup up
+file or directory has a datetime stamp appended to it.  Each successful or 
+failed backup is recorded in the log file, backup.log.
+*/
+
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -9,9 +26,15 @@
 
 using namespace std;
 
-vector<SJob> vJobs;
-string sUser;
+// Information loaded from backup.cfg
+vector<SJob> vJobs; // List of jobs.  Each job has a name, source and destination
+string sUser;       // Email address of user to whom error reports are sent
 
+// SMTP server access settings to send emails
+string sSMTPUsername; // Email address of user to access SMTP server
+string sSMTPPassword; // Password of user to access SMTP server
+
+// Load user email address and all defined jobs from configuration file, backup.cfg
 void loadUserJobs(void)
 {
     bool bResult = true;
@@ -20,7 +43,7 @@ void loadUserJobs(void)
 
     ifstream fConfig(BACKUPCONFIG);    
   
-    // Read user 
+    // Read user email address
     getline(fConfig, sUser);
    
     // Read jobs 
@@ -38,19 +61,49 @@ void loadUserJobs(void)
     fConfig.close();
 }
 
-void displayJob(SJob sJob)
+// Load SMTP access settings from .backup file
+bool loadSMTPSettings(void)
 {
-    cout << "Job ID: " << sJob.sJob << " Src: " << sJob.sSrc << " Dst: " << sJob.sDst << "\n";
+    bool bResult = true;
+    
+    try
+    {
+        ifstream fSettings(SMTPSETTINGS);    
+      
+        // Read SMTP user email address and password
+        getline(fSettings, sSMTPUsername);
+        getline(fSettings, sSMTPPassword);
+       
+        fSettings.close();
+        
+        //cout << sSMTPPassword << "\n";
+    }
+    catch (exception &e)
+    {
+        string sMessage = "Error reading SMTP access settings file.";
+        writeLogMessage(false, sMessage);
+        bResult = false;
+    }
+    
+    return bResult;
 }
 
+// Display a defined job 
+void displayJob(SJob sJob)
+{
+    cout << "Job Name: " << sJob.sJob << " Src: " << sJob.sSrc << " Dst: " << sJob.sDst << "\n";
+}
+
+// Display all defined jobs 
 void displayJobs(void)
 {
-    for (auto i = vJobs.begin(); i != vJobs.end(); i ++)
+    for (auto j = vJobs.begin(); j != vJobs.end(); j ++)
     {
-        displayJob(*i);
+        displayJob(*j);
     }
 }
 
+// Determine the source and destination for a specified job name
 bool getJob(string sJob, string &sSrc, string &sDst)
 {
     bool bResult = false;
@@ -71,6 +124,8 @@ bool getJob(string sJob, string &sSrc, string &sDst)
     return bResult;
 }
 
+// Get the current datetime stamp.  The argument, bVerbose, determines the
+// datetime stamp format
 string dateTimeStamp(bool bVerbose = false)
 {
     time_t rawtime;
@@ -84,6 +139,8 @@ string dateTimeStamp(bool bVerbose = false)
     return buffer;
 }
 
+// Copy a specified file to a destination directory.  Append a datetime stamp
+// to the copied file
 void copyFile(string sSrc, string sDst)
 {
     string sSrcFilename = sSrc.substr(sSrc.find_last_of("/") + 1);
@@ -91,6 +148,8 @@ void copyFile(string sSrc, string sDst)
     system(sCommand.c_str());
 }
 
+// Copy a specified directory to a destination directory.  Append a datetime stamp
+// to the copied directory
 void copyDirectory(string sSrc, string sDst)
 {
     string sSrcFilename = sSrc.substr(sSrc.find_last_of("/") + 1);
@@ -98,6 +157,8 @@ void copyDirectory(string sSrc, string sDst)
     system(sCommand.c_str());
 }
 
+// Write a success or failure message to the log file, backup.log.  Include a
+// datetime stamp and a description
 void writeLogMessage(bool bStatus, string sMessage)
 {
     ofstream fLog(BACKUPLOG, std::ios_base::app);    
@@ -105,15 +166,33 @@ void writeLogMessage(bool bStatus, string sMessage)
     fLog.close();
 }
 
+// Send an email to the user email address read from the configuration file to
+// indicate that a backup job has failed.  Include a datetime stamp and a 
+// description
 void sendEmailMessage(string sMessage)
 {
     string sSubject = "Backup Failure";
-    string sCommand = "echo \"" + dateTimeStamp(true) + " " + sMessage + "\" | mailx -s \"Backup Failure\" -r \"davidcgcleary@gmail.com\" -S smtp=\"smtp.gmail.com\" " + sUser;
-    //# echo "The actual message goes here" | mailx -v -r "user@domain.com" -s "The actual subject line goes here" -S smtp="smtp.domain.com:587" -S smtp-use-starttls -S smtp-auth=login -S smtp-auth-user="user@domain.com" -S smtp-auth-password="password123" -S ssl-verify=ignore the_recipient_email@domain.com
-    //cout << sCommand;
+    string sCommand = "echo -e \"<div style='font-size:40px;'> "
+                      "<img src='https://cdn1.iconfinder.com/data/icons/toolbar-std/512/error-512.png' "
+                      "height='80px' width='80px' style='vertical-align:middle;'> "
+                      + dateTimeStamp(true) + " " + sMessage + "</div>" + "\" | "
+                      "mailx -r \"davidcgcleary@gmail.com\" "
+                      "-s \"$(echo -e \"Backup Failure\nContent-Type: text/html;\n\n\")\" "
+                      "-S smtp=\"smtp.gmail.com:587\" "
+                      "-S smtp-use-starttls "
+                      "-S smtp-auth=login "
+                      //"-S smtp-auth-user=\"davidcgcleary@gmail.com\" "
+                      //"-S smtp-auth-password=\"ovmqhhimabochdnl\" "
+                      "-S smtp-auth-user=\"" + sSMTPUsername + "\" "
+                      "-S smtp-auth-password=\"" + sSMTPPassword + "\" "
+                      "-S ssl-verify=ignore "
+                      "-S nss-config-dir=/etc/pki/nssdb "
+                      + sUser;
+    //cout << sCommand << "\n";
     system(sCommand.c_str());
 }
 
+// Main function
 int main(int argc, char *argv[])
 {
     bool bResult = true;
@@ -128,6 +207,12 @@ int main(int argc, char *argv[])
     {
         cout << "Usage: backup <job>\n";
         bResult = false;
+    }
+    
+    if (bResult)
+    {
+        // Load SMTP access settings from file
+        bResult = loadSMTPSettings();
     }
   
     if (bResult)

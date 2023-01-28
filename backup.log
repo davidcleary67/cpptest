@@ -24,3 +24,52 @@ FAILURE Thu Jan 26 10:02:07 2023 Destination directory '/home/ec2-user/environme
 FAILURE Thu Jan 26 10:02:22 2023 Job 'job55' is not defined.
 FAILURE Thu Jan 26 10:04:18 2023 Job 'job55' is not defined.
 FAILURE Thu Jan 26 10:05:19 2023 Job 'job55' is not defined.
+FAILURE Fri Jan 27 00:31:16 2023 Job 'job34' is not defined.
+FAILURE Fri Jan 27 00:33:22 2023 Job 'job34' is not defined.
+FAILURE Fri Jan 27 01:23:07 2023 Job 'job34' is not defined.
+FAILURE Fri Jan 27 01:23:35 2023 Job 'job34' is not defined.
+FAILURE Fri Jan 27 01:24:06 2023 Job 'job34A' is not defined.
+FAILURE Fri Jan 27 01:24:20 2023 Job 'job100' is not defined.
+FAILURE Fri Jan 27 01:58:59 2023 Job 'job23' is not defined.
+SUCCESS Fri Jan 27 03:20:39 2023 Backed up directory '/home/ec2-user/environment/ctest1/dir1' to '/home/ec2-user/environment/ctest1/backup1'.
+SUCCESS Fri Jan 27 05:18:37 2023 Backed up directory '/home/ec2-user/environment/ctest1/dir1' to '/home/ec2-user/environment/ctest1/backup1'.
+FAILURE Fri Jan 27 05:18:50 2023 Job 'job34' is not defined.
+FAILURE Fri Jan 27 10:47:20 2023 Job 'job34' is not defined.
+FAILURE Fri Jan 27 10:47:44 2023 Job 'job34' is not defined.
+FAILURE Fri Jan 27 10:50:22 2023 Job 'job34' is not defined.
+FAILURE Fri Jan 27 10:52:03 2023 Job 'job34' is not defined.
+FAILURE Fri Jan 27 10:52:42 2023 Job 'job34' is not defined.
+FAILURE Fri Jan 27 11:03:29 2023 Job 'job34' is not defined.
+FAILURE Fri Jan 27 11:06:42 2023 Job 'job34' is not defined.
+FAILURE Fri Jan 27 22:44:37 2023 Job 'job34' is not defined.
+FAILURE Fri Jan 27 22:45:50 2023 Job 'job34' is not defined.
+FAILURE Fri Jan 27 22:46:28 2023 Job 'job35' is not defined.
+FAILURE Fri Jan 27 22:53:05 2023 Job 'job36' is not defined.
+FAILURE Fri Jan 27 22:55:24 2023 Job 'job36' is not defined.
+FAILURE Fri Jan 27 22:55:31 2023 Job 'job37' is not defined.
+FAILURE Fri Jan 27 22:56:49 2023 Job 'job38' is not defined.
+FAILURE Fri Jan 27 22:58:41 2023 Job 'job39' is not defined.
+FAILURE Fri Jan 27 22:59:43 2023 Job 'job40' is not defined.
+FAILURE Fri Jan 27 23:01:04 2023 Job 'job41' is not defined.
+FAILURE Fri Jan 27 23:02:22 2023 Job 'job42' is not defined.
+FAILURE Fri Jan 27 23:03:11 2023 Job 'job43' is not defined.
+FAILURE Fri Jan 27 23:05:19 2023 Job 'job43' is not defined.
+FAILURE Fri Jan 27 23:08:15 2023 Job 'job43' is not defined.
+FAILURE Fri Jan 27 23:08:33 2023 Job 'job44' is not defined.
+FAILURE Fri Jan 27 23:10:44 2023 Job 'job45' is not defined.
+FAILURE Fri Jan 27 23:20:18 2023 Job 'job46' is not defined.
+FAILURE Fri Jan 27 23:27:46 2023 Job 'job46' is not defined.
+FAILURE Fri Jan 27 23:28:14 2023 Job 'job47' is not defined.
+FAILURE Fri Jan 27 23:29:52 2023 Job 'job48' is not defined.
+FAILURE Fri Jan 27 23:34:37 2023 Job 'job50' is not defined.
+FAILURE Fri Jan 27 23:36:07 2023 Job 'job51' is not defined.
+SUCCESS Fri Jan 27 23:36:28 2023 Backed up directory '/home/ec2-user/environment/ctest1/dir1' to '/home/ec2-user/environment/ctest1/backup1'.
+SUCCESS Fri Jan 27 23:37:17 2023 Backed up directory '/home/ec2-user/environment/ctest1/dir1' to '/home/ec2-user/environment/ctest1/backup1'.
+SUCCESS Fri Jan 27 23:44:00 2023 Backed up directory '/home/ec2-user/environment/ctest1/dir1' to '/home/ec2-user/environment/ctest1/backup1'.
+SUCCESS Fri Jan 27 23:44:38 2023 Backed up directory '/home/ec2-user/environment/ctest1/dir1' to '/home/ec2-user/environment/ctest1/backup1'.
+SUCCESS Fri Jan 27 23:50:36 2023 Backed up directory '/home/ec2-user/environment/ctest1/dir1' to '/home/ec2-user/environment/ctest1/backup1'.
+SUCCESS Fri Jan 27 23:51:00 2023 Backed up directory '/home/ec2-user/environment/ctest1/dir1' to '/home/ec2-user/environment/ctest1/backup1'.
+SUCCESS Fri Jan 27 23:51:03 2023 Backed up file '/home/ec2-user/environment/ctest1/ctest.h' to '/home/ec2-user/environment/ctest1/backup1'.
+FAILURE Fri Jan 27 23:51:05 2023 Source '/home/ec2-user/environment/ctest1/invalid' is invalid.
+FAILURE Fri Jan 27 23:51:10 2023 Destination directory '/home/ec2-user/environment/ctest1/invalid' is invalid.
+FAILURE Fri Jan 27 23:51:17 2023 Job 'job5' is not defined.
