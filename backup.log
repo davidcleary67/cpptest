@@ -87,3 +87,15 @@ SUCCESS Sat Jan 28 23:20:35 2023 Backed up file '/home/ec2-user/environment/ctes
 FAILURE Sat Jan 28 23:20:38 2023 Source '/home/ec2-user/environment/ctest5/invalid' is invalid.
 FAILURE Sat Jan 28 23:20:44 2023 Destination directory '/home/ec2-user/environment/ctest5/invalid' is invalid.
 FAILURE Sat Jan 28 23:20:49 2023 Job 'job5' is not defined.
+FAILURE Sat Jan 28 23:34:27 2023 Error reading configuration file 'backup.cfgx'. Exception: basic_ios::clear: iostream error
+SUCCESS Sat Jan 28 23:35:46 2023 Backed up directory '/home/ec2-user/environment/ctest5/dir1' to '/home/ec2-user/environment/ctest5/backup1'.
+SUCCESS Sun Jan 29 02:31:35 2023 Backed up directory '/home/ec2-user/environment/ctest5/dir1' to '/home/ec2-user/environment/ctest5/backup1'.
+SUCCESS Sun Jan 29 02:32:22 2023 Backed up directory '/home/ec2-user/environment/ctest5/dir1' to '/home/ec2-user/environment/ctest5/backup1'.
+SUCCESS Sun Jan 29 02:32:32 2023 Backed up directory '/home/ec2-user/environment/ctest5/dir1' to '/home/ec2-user/environment/ctest5/backup1'.
+FAILURE Sun Jan 29 02:32:46 2023 Job 'job5' is not defined.
+FAILURE Sun Jan 29 02:33:09 2023 Job 'job5' is not defined.
+SUCCESS Sun Jan 29 22:38:29 2023 Backed up directory '/home/ec2-user/environment/ctest5/dir1' to '/home/ec2-user/environment/ctest5/backup1'.
+FAILURE Sun Jan 29 22:38:34 2023 Job 'job7' is not defined.
+FAILURE Sun Jan 29 22:40:53 2023 Job 'job7' is not defined.
+FAILURE Sun Jan 29 22:41:58 2023 Job 'job7' is not defined.
+FAILURE Sun Jan 29 22:42:31 2023 Job 'job7' is not defined.
